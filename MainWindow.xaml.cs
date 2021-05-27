@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -295,6 +296,19 @@ namespace RgbdForKinect
                 this.depthPixels,
                 this.depthBitmap.PixelWidth,
                 0);
+        }
+
+        private void btn_open_Click(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            folderBrowserDialog.Description = "请选择要保存图片的目录";
+            folderBrowserDialog.ShowNewFolderButton = true;
+            folderBrowserDialog.ShowDialog();
+            if (folderBrowserDialog.SelectedPath == string.Empty)
+            {
+                return;
+            }
+            this.Path = folderBrowserDialog.SelectedPath;
         }
     }
 }
