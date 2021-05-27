@@ -44,7 +44,7 @@
         <TextBox HorizontalAlignment="Right" 
                  Height="24" Margin="0,0,110,0" 
                  Grid.Row="2" TextWrapping="NoWrap" 
-                 Text="{Binding StatusText}"
+                 Text="{Binding Path}"
                  TextBlock.LineHeight="24"
                  Width="400" FontSize="16"/>
         <Button Grid.Row="2" Width="100" Height="24"

@@ -22,6 +22,8 @@ namespace RgbdForKinect
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private string path = "";
+
         /// <summary>
         /// Kinect设备
         /// </summary>
@@ -86,6 +88,28 @@ namespace RgbdForKinect
             }
         }
 
+        public string Path
+        {
+            get
+            {
+                return this.path;
+            }
+
+            set
+            {
+                if (this.path != value)
+                {
+                    this.path = value;
+
+                    // notify any bound elements that the text has changed
+                    if (this.PropertyChanged != null)
+                    {
+                        this.PropertyChanged(this, new PropertyChangedEventArgs("Path"));
+                    }
+                }
+            }
+        }
+
         public ImageSource ColorImageSource
         {
             get
@@ -104,6 +128,8 @@ namespace RgbdForKinect
 
         public MainWindow()
         {
+            this.Path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
             // get the kinectSensor object
             this.kinectSensor = KinectSensor.GetDefault();
             // open the reader for the color frames
