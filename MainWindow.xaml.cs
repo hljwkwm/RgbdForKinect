@@ -310,5 +310,10 @@ namespace RgbdForKinect
             }
             this.Path = folderBrowserDialog.SelectedPath;
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.Path = textBox_path.Text;
+        }
     }
 }

@@ -41,12 +41,12 @@
 
         <TextBlock Grid.Row="2" VerticalAlignment="Center"
                 HorizontalAlignment="Right" Margin="0, 0, 520, 0" FontSize="16">图片保存路径</TextBlock>
-        <TextBox HorizontalAlignment="Right" 
+        <TextBox x:Name="textBox_path" HorizontalAlignment="Right" 
                  Height="24" Margin="0,0,110,0" 
                  Grid.Row="2" TextWrapping="NoWrap" 
                  Text="{Binding Path}"
                  TextBlock.LineHeight="24"
-                 Width="400" FontSize="16"/>
+                 Width="400" FontSize="16" TextChanged="TextBox_TextChanged"/>
         <Button x:Name="btn_open" Grid.Row="2" Width="100" Height="24"
                 HorizontalAlignment="Right" Click="btn_open_Click">···</Button>
     </Grid>
