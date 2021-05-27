@@ -28,10 +28,10 @@
             </Grid.ColumnDefinitions>
 
             <Viewbox Grid.Column="0" HorizontalAlignment="Center">
-                <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+                <Image Source="{Binding ColorImageSource}" Stretch="UniformToFill" />
             </Viewbox>
             <Viewbox Grid.Column="1" HorizontalAlignment="Center">
-                <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+                <Image Source="{Binding DepthImageSource}" Stretch="UniformToFill" />
             </Viewbox>
         </Grid>
 
