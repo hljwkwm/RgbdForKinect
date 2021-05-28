@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -314,6 +316,96 @@ namespace RgbdForKinect
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.Path = textBox_path.Text;
+        }
+
+        private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Keyboard.ClearFocus();
+                this.textBox_path.Text = this.Path;
+                this.TabIndex = -1;
+            }
+            if (e.Key == Key.Space)
+            {
+                this.SavePhoto();
+            }
+        }
+
+        private void btn_save_Click(object sender, RoutedEventArgs e)
+        {
+            this.SavePhoto();
+        }
+
+        private void SavePhoto()
+        {
+            string str = "";
+
+            if (this.colorBitmap != null)
+            {
+                string time = System.DateTime.Now.ToString("HH'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
+                if (!Directory.Exists(Path))
+                {
+                    System.Windows.Forms.MessageBox.Show("当前文件夹不存在。");
+                    return;
+                }
+                string m_path = System.IO.Path.Combine(Path, time + "-KinectScreenshot-Color.png");
+
+                // create a png bitmap encoder which knows how to save a .png file
+                BitmapEncoder encoder = new PngBitmapEncoder();
+                // create frame from the writable bitmap and add to encoder
+                encoder.Frames.Add(BitmapFrame.Create(this.colorBitmap));
+                try
+                {
+                    // FileStream is IDisposable
+                    using (FileStream fs = new FileStream(m_path, FileMode.Create))
+                    {
+                        encoder.Save(fs);
+                    }
+                    str = string.Format("文件保存成功：{0}，", m_path);
+                }
+                catch (IOException)
+                {
+                    str = string.Format("文件保存失败：{0}，", m_path);
+                }
+            }
+
+
+
+
+            if (this.depthBitmap != null)
+            {
+                // create a png bitmap encoder which knows how to save a .png file
+                BitmapEncoder encoder = new PngBitmapEncoder();
+                // create frame from the writable bitmap and add to encoder
+                encoder.Frames.Add(BitmapFrame.Create(this.depthBitmap));
+
+                string time = System.DateTime.Now.ToString("HH'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
+                if (!Directory.Exists(Path))
+                {
+                    System.Windows.Forms.MessageBox.Show("当前文件夹不存在。");
+                    return;
+                }
+                string m_path = System.IO.Path.Combine(Path, time + "-KinectScreenshot-Depth.png");
+
+                // write the new file to disk
+                try
+                {
+                    // FileStream is IDisposable
+                    using (FileStream fs = new FileStream(m_path, FileMode.Create))
+                    {
+                        encoder.Save(fs);
+                    }
+                    str += string.Format("文件保存成功：{0}。", m_path);
+
+                }
+                catch (IOException)
+                {
+                   str += string.Format("文件保存失败：{0}。", m_path);
+                }
+            }
+
+            this.StatusText = str;
         }
     }
 }
